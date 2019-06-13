@@ -51,7 +51,7 @@ public class NetworkListener {
     public void init(Context context) {
         this.context = context;
         if (isHigherThenLollipop()) {
-           NetworkCallbackImpl networkCallback = new NetworkCallbackImpl();
+            networkCallback = new NetworkCallbackImpl();
             NetworkRequest.Builder builder = new NetworkRequest.Builder();
             NetworkRequest request = builder.build();
             ConnectivityManager connMgr = (ConnectivityManager) NetworkListener.getInstance().getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
