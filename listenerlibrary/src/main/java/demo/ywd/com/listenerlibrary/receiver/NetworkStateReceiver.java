@@ -1,4 +1,4 @@
-package demo.ywd.com.listenerlibrary.broadcast;
+package demo.ywd.com.listenerlibrary.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

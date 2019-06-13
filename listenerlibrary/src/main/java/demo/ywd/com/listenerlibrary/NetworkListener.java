@@ -7,7 +7,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkRequest;
 import android.os.Build;
 
-import demo.ywd.com.listenerlibrary.core.NetworkCallbackImpl;
+import demo.ywd.com.listenerlibrary.netcallback.NetworkCallbackImpl;
+import demo.ywd.com.listenerlibrary.receiver.NetworkStateReceiverWithAnno;
 import demo.ywd.com.listenerlibrary.template.SingletonTemplate;
 
 /**
@@ -17,6 +18,8 @@ import demo.ywd.com.listenerlibrary.template.SingletonTemplate;
 
 public class NetworkListener {
     private Context context;
+    private NetworkCallbackImpl networkCallback;
+    private NetworkStateReceiverWithAnno receiver;
 
     /**
      * 私有化构造方法
@@ -47,18 +50,54 @@ public class NetworkListener {
     @SuppressLint("MissingPermission")
     public void init(Context context) {
         this.context = context;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ConnectivityManager.NetworkCallback callback = new NetworkCallbackImpl();
+        if (isHigherThenLollipop()) {
+           NetworkCallbackImpl networkCallback = new NetworkCallbackImpl();
             NetworkRequest.Builder builder = new NetworkRequest.Builder();
             NetworkRequest request = builder.build();
             ConnectivityManager connMgr = (ConnectivityManager) NetworkListener.getInstance().getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             if (connMgr != null) {
-                connMgr.registerNetworkCallback(request, callback);
+                connMgr.registerNetworkCallback(request, networkCallback);
             }
         } else {
             //5.0以下继续使用广播
+            receiver = new NetworkStateReceiverWithAnno();
             IntentFilter filter = new IntentFilter();
             filter.addAction(Constants.ANDROID_NET_CHANGE_ACTION);
         }
+    }
+
+    /**
+     * 注册
+     *
+     * @param observer 观察者(Activity/Fragment)
+     */
+    public void registerObserver(Object observer) {
+        if (isHigherThenLollipop()) {
+            networkCallback.registerObserver(observer);
+        } else {
+            receiver.registerObserver(observer);
+        }
+    }
+
+    /**
+     * 解除注册
+     *
+     * @param observer 观察者(Activity/Fragment)
+     */
+    public void unRegisterObserver(Object observer) {
+        if (isHigherThenLollipop()) {
+            networkCallback.unRegisterObserver(observer);
+        } else {
+            receiver.unRegisterObserver(observer);
+        }
+    }
+
+    /**
+     * 版本是否是5.0及以上
+     *
+     * @return true/false
+     */
+    private boolean isHigherThenLollipop() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
     }
 }

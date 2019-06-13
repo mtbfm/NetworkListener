@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-import demo.ywd.com.listenerlibrary.broadcast.annotation.NetworkListenerWithAnno;
+import demo.ywd.com.listenerlibrary.NetworkListener;
 import demo.ywd.com.listenerlibrary.core.NetType;
 import demo.ywd.com.listenerlibrary.core.Network;
 
@@ -15,14 +15,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        NetworkListenerWithAnno.getInstance().registerObserver(this);
+        NetworkListener.getInstance().registerObserver(this);
 
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        NetworkListenerWithAnno.getInstance().unRegisterObserver(this);
+        NetworkListener.getInstance().unRegisterObserver(this);
     }
 
     @Network(netType = NetType.WIFI)

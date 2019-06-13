@@ -1,4 +1,4 @@
-package demo.ywd.com.listenerlibrary.broadcast.annotation;
+package demo.ywd.com.listenerlibrary.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -14,13 +14,14 @@ import java.util.Map;
 import java.util.Set;
 
 import demo.ywd.com.listenerlibrary.Constants;
+import demo.ywd.com.listenerlibrary.NetworkListener;
 import demo.ywd.com.listenerlibrary.core.MethodManager;
 import demo.ywd.com.listenerlibrary.core.NetType;
 import demo.ywd.com.listenerlibrary.core.Network;
 import demo.ywd.com.listenerlibrary.utils.NetworkUtils;
 
 /**
- * 网络状态改变接收-使用注解形式
+ * 网络状态改变接收-使用反射注解形式
  * Created by ywd on 2019/6/12.
  */
 
@@ -177,6 +178,6 @@ public class NetworkStateReceiverWithAnno extends BroadcastReceiver {
         if (!networkMap.isEmpty()) {
             networkMap.clear();
         }
-        NetworkListenerWithAnno.getInstance().getContext().unregisterReceiver(this);
+        NetworkListener.getInstance().getContext().unregisterReceiver(this);
     }
 }

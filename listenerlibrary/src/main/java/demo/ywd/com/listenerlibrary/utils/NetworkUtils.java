@@ -5,8 +5,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import demo.ywd.com.listenerlibrary.broadcast.NetworkListenerDefault;
-import demo.ywd.com.listenerlibrary.broadcast.annotation.NetworkListenerWithAnno;
+import demo.ywd.com.listenerlibrary.NetworkListener;
 import demo.ywd.com.listenerlibrary.core.NetType;
 
 /**
@@ -23,7 +22,7 @@ public class NetworkUtils {
      */
     @SuppressLint("MissingPermission")
     public static boolean isNetworkAvailable() {
-        ConnectivityManager connMgr = (ConnectivityManager) NetworkListenerWithAnno.getInstance().getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connMgr = (ConnectivityManager) NetworkListener.getInstance().getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connMgr == null) {
             return false;
         }
@@ -45,7 +44,7 @@ public class NetworkUtils {
      */
     @SuppressLint("MissingPermission")
     public static NetType getNetType() {
-        ConnectivityManager connMgr = (ConnectivityManager) NetworkListenerWithAnno.getInstance().getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connMgr = (ConnectivityManager) NetworkListener.getInstance().getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connMgr == null) {
             return NetType.NONE;
         }
